@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/rs2xml.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/2010_SARDROUDI_&amp;_IBRAHIM/lib/ojdbc7.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/2010_SARDROUDI_&amp;_IBRAHIM/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/2010_SARDROUDI_&amp;_IBRAHIM/lib/jsci-core-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/2010_SARDROUDI_&amp;_IBRAHIM/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/WN_APP/lib/jawjaw-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/WN_APP/lib/jwnl.jar"/>
+	<classpathentry kind="lib" path="C:/Workspace/WN_APP/lib/ws4j-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jwnl14-rc2/lib/commons-logging.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
