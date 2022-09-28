@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.math.RoundingMode;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,7 +47,6 @@ public class FrmAttSubsetDelete extends JFrame {
 	public FrmAttSubsetDelete(DBConnection pDBConnection) {
 		this.dbConnection = pDBConnection;
 		try {
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.setTitle("Subset Delete Attack...");
@@ -69,8 +67,6 @@ public class FrmAttSubsetDelete extends JFrame {
 				try {
 					CallableStatement gen_inf = null;
 					CallableStatement erase_tupl = null;
-					
-					//String id_list = "";
 					
 					int tuplAttack = Integer.valueOf(String.valueOf(dbConnection.getAllRows(cbTable.getSelectedItem().toString())*Integer.valueOf(txPercAttack.getText())/100)).intValue();
 					
@@ -108,13 +104,8 @@ public class FrmAttSubsetDelete extends JFrame {
 					while (rset_info.next ()){
 						 erase_tupl.setString (2,rset_info.getString ("ID"));
 						 erase_tupl.execute ();
-						/*if(id_list == "")
-							id_list = "(" + rset_info.getString ("ID");
-						else
-							id_list = id_list + "," + rset_info.getString ("ID");*/
 					}
 					
-					//id_list = id_list + ")";
 				    erase_tupl.close();
 				    rset_info.close();
 				    gen_inf.close();
@@ -205,15 +196,9 @@ public class FrmAttSubsetDelete extends JFrame {
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				cbTable.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						//JOptionPane.showMessageDialog(null, cbTable.getSelectedItem().toString());
-					}
-				});
-				cbTable.setModel(new DefaultComboBoxModel(new String[] {"TEX_DOCUMENTS", "COVERTYPE_A","UNIVE_SYLLABUS"}));
+				cbTable.setModel(new DefaultComboBoxModel(new String[] {"TEX_DOCUMENTS", "UNIVE_SYLLABUS"}));
 				cbTable.setSelectedIndex(0);
 				this.cbTable.setBounds(123, 8, 140, 20);
-				//this.cbTable.setModel(new DefaultComboBoxModel(this.dbConnection.getTables().toArray()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

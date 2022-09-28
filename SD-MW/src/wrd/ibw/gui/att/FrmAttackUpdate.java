@@ -26,7 +26,6 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -55,7 +54,6 @@ public class FrmAttackUpdate extends JFrame {
 		
 		this.dbConnection = pDBConnection;
 		try {
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.setTitle("Subset Update Attack...");
@@ -75,10 +73,7 @@ public class FrmAttackUpdate extends JFrame {
 				
 				try {
 					CallableStatement gen_inf = null;
-					//CallableStatement gen_val = null;
 					CallableStatement updater = null;
-					
-					//String id_list = "";
 					
 					int tuplAttack = Integer.valueOf(String.valueOf(dbConnection.getAllRows(cbTable.getSelectedItem().toString())*Integer.valueOf(txPercAttack.getText())/100)).intValue();
 					
@@ -247,11 +242,6 @@ public class FrmAttackUpdate extends JFrame {
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				cbTable.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						//JOptionPane.showMessageDialog(null, cbTable.getSelectedItem().toString());
-					}
-				});
 				///cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"UNIVE_SYLLABUS"}));
 				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"TEX_DOCUMENTS"}));
 				cbTable.setSelectedIndex(0);

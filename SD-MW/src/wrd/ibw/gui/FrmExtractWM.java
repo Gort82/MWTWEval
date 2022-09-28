@@ -60,7 +60,6 @@ public class FrmExtractWM extends JFrame {
 	private JComboBox<String> cbTable = null;
 	private JTextField tfFractTupl;
 	private JTextField tfPrivateKey;
-	private JButton btnEnhance;
 	private JButton btnSave;
 
 	private WNCaller tempWNCaller = null;
@@ -109,8 +108,6 @@ public class FrmExtractWM extends JFrame {
 	private JTextField txTotalTupl;
 	private JTextField txTotalTuples;
 	private JTextField txMTP;
-
-	private JButton btnAssign = null;
 
 	/**
 	 * @wbp.nonvisual location=552,209
@@ -702,9 +699,6 @@ public class FrmExtractWM extends JFrame {
 							txMTP.setText(String.valueOf(df.format(Float.valueOf(txTotalTupl.getText())*100/Float.valueOf(txTotalTuples.getText()))));
 						}
 
-						btnEnhance.setEnabled(true);
-
-
 						System.out.println("-----------------------------------------------");
 						Calendar cal1 = Calendar.getInstance();
 						cal1.getTime();
@@ -800,10 +794,6 @@ public class FrmExtractWM extends JFrame {
 			label_9.setHorizontalAlignment(SwingConstants.LEFT);
 			label_9.setBounds(14, 85, 103, 14);
 			panel_5.add(label_9);
-
-			//btnAssign.setEnabled(false);
-			btnAssign.setBounds(764, 247, 85, 23);
-			getContentPane().add(btnAssign);
 
 			JPanel panel_7 = new JPanel();
 			panel_7.setLayout(null);

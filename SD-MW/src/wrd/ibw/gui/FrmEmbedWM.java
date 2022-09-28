@@ -408,6 +408,9 @@ public class FrmEmbedWM extends JFrame {
 					String[] excluded = {"a", "at", "an", "as", "ar", "are", "be", "can", "coming", "come", "do", "going", "have", "in", "it", "might", "more", "now", "or", "one", "over", "out", "say", "us", "so", "today", "will"};
 
 					try {
+						
+						computeVPK();
+						
 						csTuples = dbConnection.getConnection().prepareCall ("{ ? = call RTW_GET_GENINF (?,?,?,?)}");
 						csTuples.registerOutParameter (1, OracleTypes.CURSOR);
 						csTuples.setString (2,cbTable.getSelectedItem().toString());
@@ -1208,5 +1211,33 @@ public class FrmEmbedWM extends JFrame {
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}	
+	}
+	
+	private void computeVPK() {
+		CallableStatement csVPKGen = null;
+		CallableStatement csConsFact = null;
+		
+		try {
+			csVPKGen = dbConnection.getConnection().prepareCall ("{call RTW_ASSIGN_VPK (?,?)}");
+			csVPKGen.setString(1, cbTable.getSelectedItem().toString());
+			csVPKGen.setString(2, txSK.getText());
+			csVPKGen.execute (); 
+			
+			csConsFact = dbConnection.getConnection().prepareCall ("{call RTW_GENERATE_CONSFACTOR (?,?)}");
+			csConsFact.setString(1, cbTable.getSelectedItem().toString());
+			csConsFact.setInt (2,Integer.valueOf(tfFractTupl.getText()));
+			csConsFact.execute (); 
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				csVPKGen.close();
+				csConsFact.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 }
