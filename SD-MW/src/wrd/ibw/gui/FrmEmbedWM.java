@@ -478,8 +478,17 @@ public class FrmEmbedWM extends JFrame {
 
 													String[] words = sentences.elementAt(j).split("\\s+");
 
+													if(words.length > 0) {
+													
 													final_dot = false;
 
+													/*if((rsTuples.getInt ("ID") == 1873) || (rsTuples.getInt ("ID") == 1874)) {
+														System.out.println(rsTuples.getInt ("ID"));
+														System.out.println(words);
+													}*/
+													
+													
+													
 													if (words[words.length-1].substring(words[words.length-1].length()-1).equals(".")) {
 														words[words.length-1] = words[words.length-1].substring(0, words[words.length-1].length()-1);
 														sentences.set(j, sentences.elementAt(j).substring(0,sentences.elementAt(j).length()-1));
@@ -635,7 +644,7 @@ public class FrmEmbedWM extends JFrame {
 																sentences.set(j, sentences.elementAt(j) + ".");
 															}
 													}
-												}
+												}}
 											}
 										}
 									}

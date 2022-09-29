@@ -493,6 +493,8 @@ public class FrmExtractWM extends JFrame {
 													extSynonymSetB = "";  
 
 													String[] words = sentences.elementAt(j).split("\\s+");
+													
+													if(words.length > 0) {
 
 													if (words[words.length-1].substring(words[words.length-1].length()-1).equals(".")) {
 														words[words.length-1] = words[words.length-1].substring(0, words[words.length-1].length()-1);
@@ -605,6 +607,7 @@ public class FrmExtractWM extends JFrame {
 															carrierForSentence.clear();
 														}
 													}
+												}
 												}
 											}
 										}
