@@ -464,7 +464,7 @@ public class FrmExtractWM extends JFrame {
 						csLoadCheck.setString (2,cbTable.getSelectedItem().toString());
 
 						while (rsTuples.next ()){
-							System.out.println(rsTuples.getInt ("ID"));
+							//System.out.println(rsTuples.getInt ("ID"));
 							csLoadCheck.setInt(3, rsTuples.getInt ("ID"));
 
 							try {

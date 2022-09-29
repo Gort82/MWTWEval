@@ -438,7 +438,7 @@ public class FrmEmbedWM extends JFrame {
 
 
 						while (rsTuples.next ()){
-							System.out.println(rsTuples.getInt ("ID"));
+							//System.out.println(rsTuples.getInt ("ID"));
 
 							//csLoadCheck.setString(2, "TEX_DOCUMENTS");
 							csLoadCheck.setInt(3, rsTuples.getInt ("ID"));
