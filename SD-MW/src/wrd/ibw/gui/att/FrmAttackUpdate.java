@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -47,10 +48,17 @@ public class FrmAttackUpdate extends JFrame {
 	private JTextField txPercAttack;
 	private JSpinner spAtr;
 	
-	public FrmAttackUpdate(DBConnection pDBConnection) {
-		///String[ ] attribute_array = {"EMB_MOD_VER_DETT_ENG", "EMB_RIS_APPR_ENG", "EMB_CONTENUTI_ENG", "EMB_OBIETT_FORM_ENG"}; 
-		String[ ] attribute_array = {"EMB_TEXT"}; 
+	public FrmAttackUpdate(DBConnection pDBConnection, int tablIndex) {
+		Vector<String> attribute_array = new Vector<String>(); 
     	
+		if(tablIndex == 0)
+			attribute_array.add("EMB_TEXT"); 
+		else {
+			attribute_array.add("EMB_MOD_VER_DETT_ENG"); 
+			attribute_array.add("EMB_RIS_APPR_ENG"); 
+			attribute_array.add("EMB_CONTENUTI_ENG"); 
+			attribute_array.add("EMB_OBIETT_FORM_ENG"); 
+		}
 		
 		this.dbConnection = pDBConnection;
 		try {
@@ -64,13 +72,12 @@ public class FrmAttackUpdate extends JFrame {
 		lblRelationToMark.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRelationToMark.setBounds(10, 11, 110, 14);
 		getContentPane().add(lblRelationToMark);
-		getContentPane().add(getJCBTable());
+		getContentPane().add(getJCBTable(tablIndex));
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.setBounds(165, 127, 122, 23);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				try {
 					CallableStatement gen_inf = null;
 					CallableStatement updater = null;
@@ -118,31 +125,42 @@ public class FrmAttackUpdate extends JFrame {
 				    updater.setString(1, cbTable.getSelectedItem().toString());
 				    
 				    
-				    while (rset_info.next ()){
-				    	//Vector<Integer> temp = new Vector<Integer>();
-				    	//int i = 0;
-				    	//do {
-				    		//int index = (int) (Math.random() * 10);
-				    	//	if(!temp.contains(index)) {
-				    	//		temp.add(index);
-				    	//		updater.setString (2, attribute_array[index]);
-				    			updater.setString (2, attribute_array[0]);
-				    			
-				    			gen_inf.setString (2,cbTable.getSelectedItem().toString());
-				    			
-				    			//gen_val.setString (3,attribute_array[index]);
-				    			//gen_val.execute ();
-								//ResultSet rset_val = (ResultSet)gen_val.getObject (1);
-								
-								//while (rset_val.next ()){updater.setClob(3, rset_val.getClob (1));}
-								updater.setInt(3, Integer.valueOf(rset_info.getString ("ID")));
-								updater.execute ();
-								//i++;
-				    		//}
-				    	//}while(i < (Integer)spAtr.getValue());
-				    	//temp.clear();
-				    }
-					
+				    
+				    	
+			    	if(tablIndex == 0) {
+			    		while (rset_info.next ()){
+			    			updater.setString (2, attribute_array.get(0));
+			    			//gen_inf.setString (2,cbTable.getSelectedItem().toString());
+			    			updater.setInt(3, Integer.valueOf(rset_info.getString ("ID")));
+							updater.execute ();
+			    		}
+			    	} else {
+						while (rset_info.next ()){
+			    			
+							
+							Vector<Integer> temp = new Vector<Integer>();
+					    	int i = 0;
+					    	do {
+					    		int index = (int) (Math.random() * (Integer)spAtr.getValue());
+					    		if(!temp.contains(index)) {
+					    			temp.add(index);
+					    			updater.setString (2, attribute_array.get(index));
+					    			//gen_inf.setString (2,cbTable.getSelectedItem().toString());
+					    			
+					    			//gen_val.setString (3,attribute_array.get(index));
+					    			//gen_val.execute ();
+									//ResultSet rset_val = (ResultSet)gen_val.getObject (1);
+									
+									//while (rset_val.next ()){updater.setClob(3, rset_val.getClob (1));}
+									updater.setInt(3, Integer.valueOf(rset_info.getString ("ID")));
+									updater.execute ();
+									i++;
+					    		}
+					    	}while(i < (Integer)spAtr.getValue());
+					    	temp.clear();
+			    		}
+					}
+			    	
 				    rset_info.close();
 				    gen_inf.close();
 					
@@ -228,28 +246,45 @@ public class FrmAttackUpdate extends JFrame {
 			lblNoAttrs.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblNoAttrs.setBounds(273, 38, 116, 14);
 			getContentPane().add(lblNoAttrs);
-			
-			spAtr = new JSpinner();
-			spAtr.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-			spAtr.setBounds(392, 35, 38, 20);
-			getContentPane().add(spAtr);
+			getContentPane().add(getJSpinner(tablIndex));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private JComboBox<String> getJCBTable(){
+	private JSpinner getJSpinner(int relIndex){
+		if(this.spAtr == null){
+			try {
+				spAtr = new JSpinner();
+				if(relIndex == 0)
+					spAtr.setModel(new SpinnerNumberModel(1, 1, 1, 1));
+				else
+					spAtr.setModel(new SpinnerNumberModel(1, 1, 4, 1));
+				
+				spAtr.setBounds(392, 35, 38, 20);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return this.spAtr;
+	}
+	
+	private JComboBox<String> getJCBTable(int relIndex){
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				///cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"UNIVE_SYLLABUS"}));
-				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"TEX_DOCUMENTS"}));
-				cbTable.setSelectedIndex(0);
+				cbTable.setEnabled(false);
+				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"TEX_DOCUMENTS","UNIVE_SYLLABUS"}));
+				cbTable.setSelectedIndex(relIndex);
 				this.cbTable.setBounds(123, 8, 140, 20);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return this.cbTable;
+	}
+	
+	public void setTablndex(int tablIndex) {
+		cbTable.setSelectedIndex(tablIndex);
 	}
 }

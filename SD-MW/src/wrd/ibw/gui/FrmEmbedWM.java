@@ -193,6 +193,7 @@ public class FrmEmbedWM extends JFrame {
 			pnImageSelector.add(lbImageViewer);
 
 			JButton btnOpen = new JButton("Select Image");
+			btnOpen.setEnabled(false);
 			btnOpen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					int returnVal = fileChooser.showOpenDialog(FrmEmbedWM.this);
@@ -745,6 +746,7 @@ public class FrmEmbedWM extends JFrame {
 						Toolkit.getDefaultToolkit().beep();
 
 						saveImages();
+						
 						///////JOptionPane.showMessageDialog(null, "Embedding Process completed...");
 					} 
 					catch (Exception e) {
@@ -924,8 +926,10 @@ public class FrmEmbedWM extends JFrame {
 
 							}
 						}
+						btnOpen.setEnabled(true);
 
 					} catch (Exception e2) {
+						btnOpen.setEnabled(false);
 						e2.printStackTrace();
 					}
 
@@ -1135,6 +1139,10 @@ public class FrmEmbedWM extends JFrame {
 	public String getTupleFract(){
 		return tfFractTupl.getText();
 	}
+	
+	public int getRelIndex(){
+		return cbTable.getSelectedIndex();
+	}
 
 	public int getAttrFract(){
 		return Integer.valueOf(spAF.getValue().toString());
@@ -1249,4 +1257,5 @@ public class FrmEmbedWM extends JFrame {
 			}
 		}
 	}
+
 }

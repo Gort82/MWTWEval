@@ -3,7 +3,6 @@ package wrd.ibw.gui;
 import java.awt.ComponentOrientation;
 import java.awt.Font;
 
-import javax.print.PrintService;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,17 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.math.RoundingMode;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
@@ -37,11 +27,9 @@ import wrd.ibw.da.DBConnection;
 import wrd.ibw.gui.att.FrmAttSubsetDelete;
 import wrd.ibw.gui.att.FrmAttSupersetInsert;
 import wrd.ibw.gui.att.FrmAttackUpdate;
-import wrd.ibw.utils.Util;
 import wrd.ibw.utils.jssim.SsimCalculator;
 
 import javax.swing.SwingConstants;
-import javax.swing.JCheckBox;
 
 public class FrmMain extends JFrame {
 	private static final long serialVersionUID = -1512879679573325942L;
@@ -78,7 +66,11 @@ public class FrmMain extends JFrame {
 	private JTextField txSSIMEmb_Ext;
 	private JTextField txOrig_Emb;
 	private JTextField txSSIMOrig_Emb;
-	private JCheckBox cbNoExt = null;
+	
+	private JButton btnInsertAtt;
+	private JButton btnUpdate;
+	private JButton btnDelete;
+	
 	
 	
 	public FrmMain() {
@@ -143,8 +135,8 @@ public class FrmMain extends JFrame {
 						dbConnection = new DBConnection(tfServer.getText(), tfSID.getText(), tfUser.getText(), String.copyValueOf(tfPassword.getPassword()));
 						if(dbConnection.getConnection() != null){
 							getBtnEmbedWM().setEnabled(true);
-							getBtnExtractWM().setEnabled(true);
-							btnMetrics.setEnabled(true);
+							//getBtnExtractWM().setEnabled(true);
+							//btnMetrics.setEnabled(true);
 							btnConnect.setText("Disconnect");
 							lblStatus.setForeground(new Color(34, 139, 34));
 							lblStatus.setText("Connected...");
@@ -233,11 +225,9 @@ public class FrmMain extends JFrame {
 					double cumul2 = 0;
 					double cumul3 = 0;	float mse2 = 0;
 					double cumul4 = 0;	float mse4 = 0;
-					double cf = 0;       float me1 = 0;
-					double cf2 = 0;      float me2 = 0;
+					double cf = 0;        
 					double cf3 = 0;
 					double cf4 = 0;
-					int embedded_size = 0;
 					try {
 						for (int i = 0; i < originalImgWidth; i++) {
 		 					for (int j = 0; j < originalImgHeight; j++) {
@@ -246,12 +236,8 @@ public class FrmMain extends JFrame {
 		 							mse1 = mse1 + (float)Math.pow((originalImage[j][i] - recoveredImage[j][i]),2);
 		 						}
 		 						
-		 						
 		 						if(embeddedImage[j][i] != -1){
 		 							cumul3 = cumul3 + (embeddedImage[j][i] ^ (-1*(recoveredImage[j][i]-1)));
-		 							//mse1 = mse1 + (float)Math.pow((embeddedImage[j][i] - recoveredImage[j][i]),2);
-		 							
-		 							//for the original vs the embeded one
 		 							cumul4 = cumul4 + (originalImage[j][i] ^ (-1*(embeddedImage[j][i]-1)));
 		 							mse4 = mse4 + (float)Math.pow((originalImage[j][i] - embeddedImage[j][i]),2);
 		 						}
@@ -277,7 +263,6 @@ public class FrmMain extends JFrame {
 						System.out.println("DIFERENTESSSS: " + differentes);
 						
 						Vector<Integer> embLinear = new Vector<Integer>();
-						Vector<Integer> extLinear = new Vector<Integer>();
 						
 						for (int i = 0; i < originalImgWidth; i++) {
 		 					for (int j = 0; j < originalImgHeight; j++) {
@@ -297,13 +282,7 @@ public class FrmMain extends JFrame {
 						
 						cf = 100*cumul/(originalImgWidth*originalImgHeight);
 						cf4 = 100*cumul4/(originalImgWidth*originalImgHeight);
-						cf2 = 100*cumul2/(originalImgWidth*originalImgHeight);
 						cf3 = 100*cumul3/embLinear.size();
-						
-						
-						me1 = mse1/(originalImgWidth*originalImgHeight);
-						me2 = mse2/(originalImgWidth*originalImgHeight);
-						
 						
 						DecimalFormat df = new DecimalFormat("##.##");
 						df.setRoundingMode(RoundingMode.DOWN);
@@ -436,24 +415,28 @@ public class FrmMain extends JFrame {
 		pnWatermark_1.setBounds(304, 189, 320, 63);
 		getContentPane().add(pnWatermark_1);
 		
-		JButton btnInsertAtt = new JButton("INSERT");
+		btnInsertAtt = new JButton("INSERT");
+		btnInsertAtt.setEnabled(false);
 		btnInsertAtt.setBounds(10, 25, 87, 23);
 		pnWatermark_1.add(btnInsertAtt);
 		
-		JButton btnUpdate = new JButton("UPDATE");
+		btnUpdate = new JButton("UPDATE");
+		btnUpdate.setEnabled(false);
 		btnUpdate.setBounds(115, 25, 87, 23);
 		pnWatermark_1.add(btnUpdate);
 		
-		JButton btnNewButton_1 = new JButton("DELETE");
-		btnNewButton_1.setBounds(223, 25, 87, 23);
-		pnWatermark_1.add(btnNewButton_1);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnDelete = new JButton("DELETE");
+		btnDelete.setEnabled(false);
+		btnDelete.setBounds(223, 25, 87, 23);
+		pnWatermark_1.add(btnDelete);
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(frmAttDelete == null){
-						frmAttDelete = new FrmAttSubsetDelete(dbConnection);
+						frmAttDelete = new FrmAttSubsetDelete(dbConnection, frmEmbedWM.getRelIndex());
 						frmAttDelete.setLocationRelativeTo(null);
-					}
+					} else
+						frmAttDelete.setTablndex(frmEmbedWM.getRelIndex());
 					frmAttDelete.setVisible(true);
 				} catch (Exception eX) {
 					eX.printStackTrace();
@@ -464,9 +447,10 @@ public class FrmMain extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(frmAttUpdate == null){
-						frmAttUpdate = new FrmAttackUpdate(dbConnection);
+						frmAttUpdate = new FrmAttackUpdate(dbConnection,  frmEmbedWM.getRelIndex());
 						frmAttUpdate.setLocationRelativeTo(null);
-					}
+					} else
+						frmAttUpdate.setTablndex(frmEmbedWM.getRelIndex());
 					frmAttUpdate.setVisible(true);
 				} catch (Exception eX) {
 					eX.printStackTrace();
@@ -477,9 +461,10 @@ public class FrmMain extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(frmAttInsert == null){
-						frmAttInsert = new FrmAttSupersetInsert(dbConnection);
+						frmAttInsert = new FrmAttSupersetInsert(dbConnection, frmEmbedWM.getRelIndex());
 						frmAttInsert.setLocationRelativeTo(null);
-					}
+					} else
+						frmAttInsert.setTablndex(frmEmbedWM.getRelIndex());
 					frmAttInsert.setVisible(true);
 				} catch (Exception eX) {
 					eX.printStackTrace();
@@ -500,6 +485,11 @@ public class FrmMain extends JFrame {
 						frmEmbedWM.setLocationRelativeTo(null);
 					}
 					frmEmbedWM.setVisible(true);
+					
+					btnExtractWM.setEnabled(true);
+					btnInsertAtt.setEnabled(true);
+					btnUpdate.setEnabled(true);
+					btnDelete.setEnabled(true);
 				}
 			});
 		}
@@ -518,6 +508,8 @@ public class FrmMain extends JFrame {
 						frmExtractWM.setLocationRelativeTo(null);
 					}
 					frmExtractWM.setVisible(true);
+					
+					btnMetrics.setEnabled(true);
 				}
 			});
 		}
@@ -554,13 +546,13 @@ public class FrmMain extends JFrame {
 			mySSIMCalc2 = new SsimCalculator(fileEmbb);
 			
 			
-			Double tempSSIMEmb_Ext = new Double(0);
+			Double tempSSIMEmb_Ext = Double.valueOf(0);
 			tempSSIMEmb_Ext = mySSIMCalc.compareTo(fileExt);
 			
-			Double tempSSIMOrig_Ext = new Double(0);
+			Double tempSSIMOrig_Ext = Double.valueOf(0);
 			tempSSIMOrig_Ext = mySSIMCalc.compareTo(fileExt2);
 			
-			Double tempSSIMOrig_Emb = new Double(0);
+			Double tempSSIMOrig_Emb = Double.valueOf(0);
 			tempSSIMOrig_Emb = mySSIMCalc2.compareTo(fileExt2);
 		 	
 			DecimalFormat df = new DecimalFormat("##.##");
@@ -576,4 +568,5 @@ public class FrmMain extends JFrame {
 				e.printStackTrace();
 			}
 	}
+	
 }

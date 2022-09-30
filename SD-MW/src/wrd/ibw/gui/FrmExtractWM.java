@@ -126,7 +126,7 @@ public class FrmExtractWM extends JFrame {
 			tempWNCaller = new WNCaller();
 			setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			this.setTitle("[Sardroudi & Ibrahim, 2010] Extract Watermark...");
+			this.setTitle("WM Extraction...");
 			this.setSize(697,488);
 			this.getContentPane().setLayout(null);
 
@@ -311,6 +311,7 @@ public class FrmExtractWM extends JFrame {
 			pnImageSelector.add(label_6);
 			
 						btnSave = new JButton("Save");
+						btnSave.setEnabled(false);
 						btnSave.setBounds(288, 24, 85, 23);
 						pnImageSelector.add(btnSave);
 						btnSave.addActionListener(new ActionListener() {
@@ -352,6 +353,7 @@ public class FrmExtractWM extends JFrame {
 			model.addColumn("Type");
 
 			JButton btnStart = new JButton("Extract");
+			btnStart.setEnabled(false);
 			btnStart.setBounds(144, 286, 90, 23);
 			btnStart.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -709,6 +711,7 @@ public class FrmExtractWM extends JFrame {
 						System.out.println ("PROCESS COMPLETED AT: "+sdf1.format(cal1.getTime()));
 						System.out.println("-----------------------------------------------");
 						Toolkit.getDefaultToolkit().beep();
+						btnSave.setEnabled(true);
 						JOptionPane.showMessageDialog(null, "Extraction Process completed...");
 
 					} catch (Exception e) {
@@ -913,8 +916,10 @@ public class FrmExtractWM extends JFrame {
 
 							}
 						}
+						btnStart.setEnabled(true);
 
 					} catch (Exception e2) {
+						btnStart.setEnabled(false);
 						e2.printStackTrace();
 					}
 

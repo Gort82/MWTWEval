@@ -42,7 +42,7 @@ public class FrmAttSupersetInsert extends JFrame {
 	private JTextField txSK;
 	private JTextField txTF;
 
-	public FrmAttSupersetInsert(DBConnection pDBConnection) {
+	public FrmAttSupersetInsert(DBConnection pDBConnection, int tablIndex) {
 		this.dbConnection = pDBConnection;
 		try {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -55,7 +55,7 @@ public class FrmAttSupersetInsert extends JFrame {
 		lblRelationToMark.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRelationToMark.setBounds(10, 11, 110, 14);
 		getContentPane().add(lblRelationToMark);
-		getContentPane().add(getJCBTable());
+		getContentPane().add(getJCBTable(tablIndex));
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.setBounds(308, 44, 122, 23);
@@ -216,17 +216,22 @@ public class FrmAttSupersetInsert extends JFrame {
 		}
 	}
 	
-	private JComboBox<String> getJCBTable(){
+	private JComboBox<String> getJCBTable(int tablIndex){
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				cbTable.setModel(new DefaultComboBoxModel(new String[] {"TEX_DOCUMENTS", "UNIVE_SYLLABUS"}));
-				cbTable.setSelectedIndex(0);
+				cbTable.setEnabled(false);
+				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"TEX_DOCUMENTS", "UNIVE_SYLLABUS"}));
+				cbTable.setSelectedIndex(tablIndex);
 				this.cbTable.setBounds(123, 8, 140, 20);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return this.cbTable;
+	}
+	
+	public void setTablndex(int tablIndex) {
+		cbTable.setSelectedIndex(tablIndex);
 	}
 }
