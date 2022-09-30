@@ -21,8 +21,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.math.RoundingMode;
 import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.Types;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,8 +28,6 @@ import java.util.Calendar;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import oracle.jdbc.internal.OracleTypes;
 
 public class FrmAttSupersetInsert extends JFrame {
 	private static final long serialVersionUID = -1512879679573325942L;
@@ -47,7 +43,6 @@ public class FrmAttSupersetInsert extends JFrame {
 	public FrmAttSupersetInsert(DBConnection pDBConnection) {
 		this.dbConnection = pDBConnection;
 		try {
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.setTitle("Superset Adding Attack...");
@@ -66,15 +61,9 @@ public class FrmAttSupersetInsert extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
-					/*CallableStatement updater = null;
-					CallableStatement attr_value_cs = null;
-					CallableStatement hav_value_cs = null;*/
 					CallableStatement tuple_inserter = null;
 					
 					int tuplAttack = Integer.valueOf(String.valueOf(dbConnection.getAllRows(cbTable.getSelectedItem().toString())*Integer.valueOf(txPercAttack.getText())/100)).intValue();
-					
-					
-					//EMBEDDING PROCESS OVERVIEW
 					System.out.println("-----------------------------------------------");
 					System.out.println("WM EMBEDDING PROCESS ");
 					System.out.println("-----------------------------------------------");
@@ -100,21 +89,6 @@ public class FrmAttSupersetInsert extends JFrame {
 		        		tuple_inserter.execute ();
 					}
 		        	
-		        	//GET THE GENERAL INFORMATION
-					//CallableStatement gen_inf = dbConnection.getConnection().prepareCall ("{ ? = call GET_RANDOM_MARKED_IDS (?,?,?,?)}");
-					//gen_inf.registerOutParameter (1, OracleTypes.CURSOR);
-					//gen_inf.setString (2,cbTable.getSelectedItem().toString());
-					//gen_inf.setString (3,tfPrivateKey.getText());
-					//gen_inf.setInt (4, cant_attack);
-					//gen_inf.setInt (5, Integer.parseInt(tfFractTupl.getText()));
-					//gen_inf.execute ();
-					
-				    //ResultSet rset_info = (ResultSet)gen_inf.getObject (1);
-				    
-				    //rset_info.close();
-				    //gen_inf.close();
-					
-					
 				    //RESULTS REPORT BUIL SECTION
 					DecimalFormat df = new DecimalFormat("##.##");
 					df.setRoundingMode(RoundingMode.DOWN);
@@ -199,15 +173,9 @@ public class FrmAttSupersetInsert extends JFrame {
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				cbTable.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						//JOptionPane.showMessageDialog(null, cbTable.getSelectedItem().toString());
-					}
-				});
-				cbTable.setModel(new DefaultComboBoxModel(new String[] {"COVERTYPE_A","COVERTYPE_B","COVERTYPE_C","COVERTYPE_D","COVERTYPE_E","COVERTYPE_F", "COVERTYPE_G", "COVERTYPE_H", "COVERTYPE_I", "COVERTYPE_J", "COVERTYPE_K"}));
+				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"COVERTYPE_A"}));
 				cbTable.setSelectedIndex(0);
 				this.cbTable.setBounds(123, 8, 140, 20);
-				//this.cbTable.setModel(new DefaultComboBoxModel(this.dbConnection.getTables().toArray()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

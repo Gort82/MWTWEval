@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.math.RoundingMode;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,7 +47,6 @@ public class FrmAttSubsetDelete extends JFrame {
 	public FrmAttSubsetDelete(DBConnection pDBConnection) {
 		this.dbConnection = pDBConnection;
 		try {
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.setTitle("Subset Delete Attack...");
@@ -205,15 +203,9 @@ public class FrmAttSubsetDelete extends JFrame {
 		if(this.cbTable == null){
 			try {
 				this.cbTable = new JComboBox<String>();
-				cbTable.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						//JOptionPane.showMessageDialog(null, cbTable.getSelectedItem().toString());
-					}
-				});
-				cbTable.setModel(new DefaultComboBoxModel(new String[] {"COVERTYPE_A","COVERTYPE_B","COVERTYPE_C","COVERTYPE_D","COVERTYPE_E","COVERTYPE_F", "COVERTYPE_G", "COVERTYPE_H", "COVERTYPE_I", "COVERTYPE_J", "COVERTYPE_K"}));
+				cbTable.setModel(new DefaultComboBoxModel<String>(new String[] {"COVERTYPE_A"}));
 				cbTable.setSelectedIndex(0);
 				this.cbTable.setBounds(123, 8, 140, 20);
-				//this.cbTable.setModel(new DefaultComboBoxModel(this.dbConnection.getTables().toArray()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

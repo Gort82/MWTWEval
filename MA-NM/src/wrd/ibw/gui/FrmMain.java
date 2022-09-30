@@ -42,7 +42,6 @@ public class FrmMain extends JFrame {
 	private JButton btnEmbedWM = null;
 	private JButton btnExtractWM = null;
 	private JButton btnMetrics;
-	private JButton btnUsability = null;
 	private JButton btnFixedUpdate = null;
 	private JButton btnSubsetUpdate;
 	private JButton btnRandomUpdate = null;
@@ -73,7 +72,7 @@ public class FrmMain extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		this.setTitle("[Sardroudi & Ibrahim, 2010]");
+		this.setTitle("Numerical covertype watermarking...");
 		this.setSize(556,363);
 		this.getContentPane().setLayout(null);
 		
@@ -136,7 +135,6 @@ public class FrmMain extends JFrame {
 							btnDeleteAttack.setEnabled(true);
 							btnAddingAttack.setEnabled(true);
 							btnMetrics.setEnabled(true);
-							btnUsability.setEnabled(true);
 							btnConnect.setText("Disconnect");
 							lblStatus.setForeground(new Color(34, 139, 34));
 							lblStatus.setText("Connected...");
@@ -148,8 +146,6 @@ public class FrmMain extends JFrame {
 							getBtnEmbedWM().setEnabled(false);
 							getBtnExtractWM().setEnabled(false);
 							btnSubsetUpdate.setEnabled(false);
-							//btnRandomUpdate.setEnabled(false);
-							btnUsability.setEnabled(false);
 							btnDeleteAttack.setEnabled(false);
 							btnAddingAttack.setEnabled(false);
 							btnMetrics.setEnabled(false);
@@ -423,7 +419,7 @@ public class FrmMain extends JFrame {
 			this.btnExtractWM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(frmExtractWM == null){
-						frmExtractWM = new FrmExtractWM(dbConnection, frmEmbedWM.getSecretKey(), frmEmbedWM.getTupleFract(), frmEmbedWM.getAttrFract(), frmEmbedWM.isExtAF());
+						frmExtractWM = new FrmExtractWM(dbConnection, frmEmbedWM.getSecretKey(), frmEmbedWM.getTupleFract(), frmEmbedWM.getAttrFract());
 						frmExtractWM.setLocationRelativeTo(null);
 					}
 					frmExtractWM.setVisible(true);
