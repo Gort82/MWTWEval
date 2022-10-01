@@ -60,7 +60,15 @@ Feregrino Uribe, C., & Nummenmaa, J. (2017, June). A minimum distortion: High ca
 watermarking technique for relational data. In Proceedings of the 5th ACM Workshop on Information 
 Hiding and Multimedia Security (pp. 111-121).
 
+Considering is a symmetric technique (same as SD-MW), parameters values have to be the same for 
+both the embedding and extraction processes.
 
+For this case, the only requirement for embedding is to select the binary image to generate the 
+watermark. On the other hand, for the extraction process, the size of the image generated from 
+the extracted watermark (height and width of the fields) must be written. After extracting the 
+signal from the watermark, the 'Enhance' button should be pressed to improve the quality of the 
+image created. Next, the 'Save' button should be clicked to save the images as files for SSIM 
+calculation in the main window.
 
 ***********************************************************************************************
 ***********************************          MA-NM               ******************************
