@@ -1,4 +1,6 @@
-Queries for MA-NM are discussed in detailed in: Olliaro, M., Gort Pérez, M. L., & Cortesi, A. (2022). Empirical analysis of the impact of queries on watermarked relational databases. Expert Systems with Applications, 117491.
+This file contains the queries used in the manuscript to analyze how each query type can affect the quality of the synchronized watermark.
+Queries for MA-NM are discussed in detailed in: Olliaro, M., Gort Pérez, M. L., & Cortesi, A. (2022). Empirical analysis of the impact of 
+queries on watermarked relational databases. Expert Systems with Applications, 117491.
 
 For the case of SD-MW, remember that each query must consider the pair of attributes for each carrier (e.g., CONTENUTI_ENG, EMB_CONTENUTI_ENG) (see readme.txt)
 
