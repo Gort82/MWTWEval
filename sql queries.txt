@@ -1,0 +1,167 @@
+Queries for MA-NM are discussed in detailed in: Olliaro, M., Gort Pérez, M. L., & Cortesi, A. (2022). Empirical analysis of the impact of queries on watermarked relational databases. Expert Systems with Applications, 117491.
+
+For the case of SD-MW, remember that each query must consider the pair of attributes for each carrier (e.g., CONTENUTI_ENG, EMB_CONTENUTI_ENG) (see readme.txt)
+
+Table 4. All carrier attributes and tuples are selected, which is equivalent to:
+- for MA-NM: 
+              SELECT *  FROM COVERTYPE_A;
+
+- for SD-MW¹: 
+              SELECT * FROM TEX_DOCUMENTS;  --carriers: TEXT
+
+- for SD-MW²: 
+              SELECT * UNIVE_SYLLABUS;  --carriers: CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, RIS_APPR_ENG
+
+(¹: data set TEX_DOCUMENTS, ²: data set UNIVE_SYLLABUS)
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+Table 5. All carrier attributes are selected but only some tuples, which correspond to applying horizontal filtering according to:
+- for MA-NM: 
+             SELECT * FROM COVERTYPE_A WHERE ELEVATION > 2780;
+
+- for SD-MW²: 
+             SELECT * FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+Figure 5 a) & 6 a): Depending on the percentage of recovered attributes from the carriers list:
+- for 100%: 
+            SELECT * FROM COVERTYPE_A;
+
+--ID is included to perform the WM synchronization, but it is not used as carrier
+- for  80%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY, 
+                   VERT_DIST_TO_HYDROLOGY, HOR_DIST_TO_ROADWAYS, 
+                   HILLSHADE_9AM, HILLSHADE_NOON
+            FROM COVERTYPE_A;
+
+- for  60%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY, 
+                   VERT_DIST_TO_HYDROLOGY, HOR_DIST_TO_ROADWAYS, 
+            FROM COVERTYPE_A;
+
+- for  40%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY  
+            FROM COVERTYPE_A;
+
+*************************************************************************************************************************************************
+
+Figure 5 b) & 6 b): Depending on the percentage of recovered attributes from the carriers list:
+- for 100%: 
+            SELECT * FROM UNIVE_SYLLABUS;
+
+--ID, VPK, and TUPL_FACTOR are included to perform watermark synchronization and tuple selection, assigning to the server partial role in the AHK algorithnm.
+- for  75%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG
+            FROM UNIVE_SYLLABUS;
+
+- for  50%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG, OBIETT_FORM_ENG 
+            FROM UNIVE_SYLLABUS;
+
+- for  25%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG 
+            FROM UNIVE_SYLLABUS;
+
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+Figure 7 a) & 8 a): Depending on the percentage of recovered attributes from the carriers list:
+- for 100%: 
+            SELECT * FROM COVERTYPE_A WHERE ELEVATION > 2780;
+
+--ID is included to perform the WM synchronization, but it is not used as carrier
+- for  80%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY, 
+                   VERT_DIST_TO_HYDROLOGY, HOR_DIST_TO_ROADWAYS, 
+                   HILLSHADE_9AM, HILLSHADE_NOON
+            FROM COVERTYPE_A WHERE ELEVATION > 2780;
+
+- for  60%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY, 
+                   VERT_DIST_TO_HYDROLOGY, HOR_DIST_TO_ROADWAYS, 
+            FROM COVERTYPE_A WHERE ELEVATION > 2780;
+
+- for  40%: 
+            SELECT ID, ELEVATION, ASPECT,         
+                   SLOPE, HOR_DIST_TO_HYDROLOGY  
+            FROM COVERTYPE_A WHERE ELEVATION > 2780;
+
+*************************************************************************************************************************************************
+
+Figure 7 b) & 8 b): Depending on the percentage of recovered attributes from the carriers list:
+- for 100%: 
+            SELECT * FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+- for  75%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG 
+            FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+- for  50%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG, OBIETT_FORM_ENG 
+            FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+- for  25%: 
+            SELECT ID, VPK, TUPL_FACTOR, 
+                   CONTENUTI_ENG 
+            FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+Figure 9: depending on the carriers selected + the new column:
+           -- TO BE ADDED
+
+*************************************************************************************************************************************************
+
+Figure 10: depending on the carriers selected + the new column:
+           -- TO BE ADDED
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+Table 7: depending on the attribute selected to perform the grouping:
+
+- grouping by AF_GEN_DES: 
+            SELECT MAX(CAST(CONTENUTI_ENG AS VARCHAR2(2000)))
+            FROM UNIVE_SYLLABUS
+            GROUP BY AF_GEN_DES;
+             
+             
+- grouping by SETT_COD: 
+            SELECT  MAX(CAST(CONTENUTI_ENG AS VARCHAR2(2000)))
+            FROM UNIVE_SYLLABUS
+            GROUP BY SETT_COD;
+             
+- these are generic queries to illustrate the degree of damage done to the synchronized watermark.          
+- for these cases, any of the carriers can be used (instead of CONTENUTI_ENG).
+- The need to truncate the value of the carrier for the data type conversion to be able to apply the aggregate function is another factor that 
+compromises the watermark synchronization, besides losing the primary key of the tuple, and a high number of carrier values due to the GROUP BY. 
+
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
+
+For the case of action queries, the queries are directly generated from the implemented system, depending on the number of tuples selected when 
+performing insert, update, or delete using the respective windows displayed by pressing the buttons in the pane Queries of the main screen. When 
+simulating update queries, remember to consider the same number of attributes as the one mentioned in the manuscript. Even if the attribute selection 
+is pseudo-random, a different number of attributes will produce a different result.
+
+*************************************************************************************************************************************************
+*************************************************************************************************************************************************
