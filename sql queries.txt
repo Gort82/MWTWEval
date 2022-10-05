@@ -12,7 +12,7 @@ Table 4. All carrier attributes and tuples are selected, which is equivalent to:
               SELECT * FROM TEX_DOCUMENTS;  --carriers: TEXT
 
 - for SD-MW²: 
-              SELECT * UNIVE_SYLLABUS;  --carriers: CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, RIS_APPR_ENG
+              SELECT * FROM UNIVE_SYLLABUS;  --carriers: CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, RIS_APPR_ENG
 
 (¹: data set TEX_DOCUMENTS, ²: data set UNIVE_SYLLABUS)
 
@@ -124,14 +124,42 @@ Figure 7 b) & 8 b): Depending on the percentage of recovered attributes from the
 
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
+-- First, the column NEW_CONC takes the value resulting from concatenating two carriers according to the following query:
+   UPDATE UNIVE_SYLLABUS SET NEW_CONC = CONCAT(EMB_MOD_VER_DETT_ENG, CONCAT(' ', EMB_RIS_APPR_ENG));
+-- Then, the new column is considered for the extraction depending on the cases depicted in the figure:
 
-Figure 9: depending on the carriers selected + the new column:
-           -- TO BE ADDED
+For Figure 9: depending on the carriers selected + the new column:
+    --Original carriers:
+      SELECT * FROM UNIVE_SYLLABUS;
+
+    --Original carriers + New column:
+      SELECT ID, VPK, TUPL_FACTOR, CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, RIS_APPR_ENG, NEW_CONC FROM UNIVE_SYLLABUS;
+
+    --New column replacing the last carrier:
+      SELECT ID, VPK, TUPL_FACTOR, CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, NEW_CONC FROM UNIVE_SYLLABUS;
+
+    --New column replacing carriers used for its generation:
+      SELECT ID, VPK, TUPL_FACTOR, CONTENUTI_ENG, OBIETT_FORM_ENG, NEW_CONC FROM UNIVE_SYLLABUS;
 
 *************************************************************************************************************************************************
 
 Figure 10: depending on the carriers selected + the new column:
-           -- TO BE ADDED
+    --Original carriers:
+      SELECT * FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+    --Original carriers + New column:
+      SELECT ID, VPK, TUPL_FACTOR, 
+             CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, RIS_APPR_ENG, NEW_CONC 
+      FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+    --New column replacing the last carrier:
+      SELECT ID, VPK, TUPL_FACTOR, 
+             CONTENUTI_ENG, OBIETT_FORM_ENG, MOD_VER_DETT_ENG, NEW_CONC 
+      FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
+
+    --New column replacing carriers used for its generation:
+      SELECT ID, VPK, TUPL_FACTOR, 
+             CONTENUTI_ENG, OBIETT_FORM_ENG, NEW_CONC 
+      FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
 
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
