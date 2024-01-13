@@ -1,3 +1,17 @@
+These systems are implemented for watermarking relational data using a binary image as a 
+watermark source. Both are designed based on the client-server architecture, where the 
+client tier was implemented using Java, and the server tier was implemented on Oracle 
+Database. For their deployment, the JVM 1.8 and Oracle Database 19C are required. 
+
+* MA-NM implements a multi-attribute numerical cover-type watermarking technique. 
+  This means that more than one attribute can be selected per tuple for mark embedding. 
+  All attributes selected by this technique are of the numeric type.
+
+* SD-MW implements a Semantic-based watermarking technique that selects multi-word textual
+  attributes for embedding the watermark by replacing some words with synonyms. The synonyms 
+  used as candidates for the replacement are detected using the context given by the sentence 
+  containing the word being replaced.
+
 ***********************************************************************************************
 ***********************************          SD-MW               ******************************
 ***********************************************************************************************
@@ -39,16 +53,13 @@ press the button 'Calculate' (Remember that watermark extraction and embedding m
 first to obtain values that make sense).
 Also, on the same screen are the buttons to analyze the effects that operations such as tuple 
 insertion, attribute updates, and tuple deletion will have on the detected watermark signal. 
-Some of these operations are constrained fo the conditions defined in the proposed manuscript. 
+Some of these operations are constrained by the conditions defined in the proposed manuscript. 
 In particular, when performing the updates of attributes (button 'UPDATE' of the main screen), 
 when the data set 'TEX_DOCUMENTS' is selected to embed the watermark, the updates will be 
-performed just on that attributes according to the percentage of tuples being involved. 
+performed just on those attributes according to the percentage of tuples being involved. 
 On the other hand, when selecting 'UNIVE_SYLLABUS' data set, the number of attributes to 
 update will be restricted to a maximum of 4, considering the maximum number of attributes 
 selected as carriers mentioned in the manuscript. 
-***********************************************************************************************
-***********************************          SD-MW               ******************************
-***********************************************************************************************
 _______________________________________________________________________________________________
 _______________________________________________________________________________________________
 
@@ -60,7 +71,7 @@ Feregrino Uribe, C., & Nummenmaa, J. (2017, June). A minimum distortion: High ca
 watermarking technique for relational data. In Proceedings of the 5th ACM Workshop on Information 
 Hiding and Multimedia Security (pp. 111-121).
 
-Considering is a symmetric technique (same as SD-MW), parameters values have to be the same for 
+Considering is a symmetric technique (same as SD-MW), parameter values have to be the same for 
 both the embedding and extraction processes.
 
 For this case, the only requirement for embedding is to select the binary image to generate the 
