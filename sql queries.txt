@@ -4,7 +4,7 @@ queries on watermarked relational databases. Expert Systems with Applications, 1
 
 For the case of SD-MW, remember that each query must consider the pair of attributes for each carrier (e.g., CONTENUTI_ENG, EMB_CONTENUTI_ENG) (see readme.txt)
 
-Table 4. All carrier attributes and tuples are selected, which is equivalent to:
+Table 7. All carrier attributes and tuples are selected, which is equivalent to:
 - for MA-NM: 
               SELECT *  FROM COVERTYPE_A;
 
@@ -19,7 +19,7 @@ Table 4. All carrier attributes and tuples are selected, which is equivalent to:
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
 
-Table 5. All carrier attributes are selected but only some tuples, which correspond to applying horizontal filtering according to:
+Table 8. All carrier attributes are selected but only some tuples, which correspond to applying horizontal filtering according to:
 - for MA-NM: 
              SELECT * FROM COVERTYPE_A WHERE ELEVATION > 2780;
 
@@ -29,7 +29,7 @@ Table 5. All carrier attributes are selected but only some tuples, which corresp
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
 
-Figure 5 a) & 6 a): Depending on the percentage of recovered attributes from the carriers list:
+Figure 3 a) & 4 a): Depending on the percentage of recovered attributes from the list of carriers:
 - for 100%: 
             SELECT * FROM COVERTYPE_A;
 
@@ -54,7 +54,7 @@ Figure 5 a) & 6 a): Depending on the percentage of recovered attributes from the
 
 *************************************************************************************************************************************************
 
-Figure 5 b) & 6 b): Depending on the percentage of recovered attributes from the carriers list:
+Figure 3 b) & 4 b): Depending on the percentage of recovered attributes from the carriers list:
 - for 100%: 
             SELECT * FROM UNIVE_SYLLABUS;
 
@@ -78,7 +78,7 @@ Figure 5 b) & 6 b): Depending on the percentage of recovered attributes from the
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
 
-Figure 7 a) & 8 a): Depending on the percentage of recovered attributes from the carriers list:
+Figure 5 a) & 6 a): Depending on the percentage of recovered attributes from the carriers list:
 - for 100%: 
             SELECT * FROM COVERTYPE_A WHERE ELEVATION > 2780;
 
@@ -103,7 +103,7 @@ Figure 7 a) & 8 a): Depending on the percentage of recovered attributes from the
 
 *************************************************************************************************************************************************
 
-Figure 7 b) & 8 b): Depending on the percentage of recovered attributes from the carriers list:
+Figure 5 b) & 6 b): Depending on the percentage of recovered attributes from the carriers list:
 - for 100%: 
             SELECT * FROM (SELECT * FROM UNIVE_SYLLABUS ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum <= 1758;
 
@@ -164,7 +164,7 @@ Figure 10: depending on the carriers selected + the new column:
 *************************************************************************************************************************************************
 *************************************************************************************************************************************************
 
-Table 7: depending on the attribute selected to perform the grouping:
+Table 10: depending on the attribute selected to perform the grouping:
 
 - grouping by AF_GEN_DES: 
             SELECT MAX(CAST(CONTENUTI_ENG AS VARCHAR2(2000)))
